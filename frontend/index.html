@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowNet IDS - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+        }
+        
+        .cyber-font {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .neon-border {
+            border: 2px solid #00ff88;
+            box-shadow: 0 0 10px #00ff88, inset 0 0 10px rgba(0, 255, 136, 0.1);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88;
+        }
+        
+        .neon-red {
+            border-color: #ff0044;
+            box-shadow: 0 0 10px #ff0044, inset 0 0 10px rgba(255, 0, 68, 0.1);
+        }
+        
+        .neon-red-text {
+            text-shadow: 0 0 10px #ff0044, 0 0 20px #ff0044;
+        }
+        
+        .cyber-card {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+        
+        .cyber-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+        }
+        
+        .cyber-input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+        
+        .cyber-button {
+            background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+            color: #0a0a0a;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .cyber-button:hover {
+            box-shadow: 0 0 20px #00ff88;
+            transform: translateY(-2px);
+        }
+        
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            animation: scan 3s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+    </style>
+</head>
+<body class="grid-bg">
+    <div class="scan-line"></div>
+    
+    <div id="app" class="min-h-screen flex items-center justify-center p-4">
+        <!-- Login Page -->
+        <div id="login-page" class="w-full max-w-md">
+            <div class="cyber-card rounded-lg p-8 neon-border">
+                <div class="text-center mb-8">
+                    <h1 class="cyber-font text-4xl font-black text-green-400 neon-text mb-2">SHADOWNET</h1>
+                    <p class="text-green-300 text-lg">Intrusion Detection System</p>
+                </div>
+                
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label class="block text-green-400 mb-2 cyber-font">Username</label>
+                        <input type="text" id="username" 
+                            class="cyber-input w-full px-4 py-3 rounded-lg"
+                            placeholder="Enter username" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-green-400 mb-2 cyber-font">Password</label>
+                        <input type="password" id="password" 
+                            class="cyber-input w-full px-4 py-3 rounded-lg"
+                            placeholder="Enter password" required>
+                    </div>
+                    
+                    <button type="submit" class="cyber-button w-full py-3 rounded-lg cyber-font text-lg">
+                        ACCESS SYSTEM
+                    </button>
+                </form>
+                
+                <div id="login-error" class="mt-4 text-red-400 text-center hidden"></div>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-green-300 text-sm">New to ShadowNet?</p>
+                    <button id="register-btn" class="text-green-400 hover:text-green-300 cyber-font mt-2">
+                        Create Account
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Register Page -->
+        <div id="register-page" class="w-full max-w-md hidden">
+            <div class="cyber-card rounded-lg p-8 neon-border">
+                <div class="text-center mb-8">
+                    <h1 class="cyber-font text-4xl font-black text-green-400 neon-text mb-2">REGISTER</h1>
+                    <p class="text-green-300 text-lg">Join ShadowNet IDS</p>
+                </div>
+                
+                <form id="register-form" class="space-y-6">
+                    <div>
+                        <label class="block text-green-400 mb-2 cyber-font">Username</label>
+                        <input type="text" id="reg-username" 
+                            class="cyber-input w-full px-4 py-3 rounded-lg"
+                            placeholder="Choose username" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-green-400 mb-2 cyber-font">Password</label>
+                        <input type="password" id="reg-password" 
+                            class="cyber-input w-full px-4 py-3 rounded-lg"
+                            placeholder="Choose password" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-green-400 mb-2 cyber-font">Role</label>
+                        <select id="reg-role" class="cyber-input w-full px-4 py-3 rounded-lg">
+                            <option value="ROLE_ANALYST">Analyst</option>
+                            <option value="ROLE_ADMIN">Admin</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="cyber-button w-full py-3 rounded-lg cyber-font text-lg">
+                        CREATE ACCOUNT
+                    </button>
+                </form>
+                
+                <div id="register-error" class="mt-4 text-red-400 text-center hidden"></div>
+                
+                <div class="mt-6 text-center">
+                    <button id="back-to-login" class="text-green-400 hover:text-green-300 cyber-font">
+                        Back to Login
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard -->
+        <div id="dashboard-page" class="w-full max-w-7xl hidden">
+            <div class="cyber-card rounded-lg p-6 neon-border">
+                <div class="flex justify-between items-center mb-8">
+                    <h1 class="cyber-font text-3xl font-black text-green-400 neon-text">DASHBOARD</h1>
+                    <button id="logout-btn" class="cyber-button px-6 py-2 rounded-lg cyber-font">
+                        LOGOUT
+                    </button>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="cyber-card rounded-lg p-6 neon-border">
+                        <h3 class="text-green-400 cyber-font mb-2">Total Threats</h3>
+                        <p id="total-threats" class="text-4xl font-black text-green-300">0</p>
+                    </div>
+                    <div class="cyber-card rounded-lg p-6 neon-border">
+                        <h3 class="text-green-400 cyber-font mb-2">Recent Alerts</h3>
+                        <p id="recent-alerts" class="text-4xl font-black text-green-300">0</p>
+                    </div>
+                    <div class="cyber-card rounded-lg p-6 neon-border">
+                        <h3 class="text-green-400 cyber-font mb-2">Suspicious IPs</h3>
+                        <p id="suspicious-ips" class="text-4xl font-black text-green-300">0</p>
+                    </div>
+                    <div class="cyber-card rounded-lg p-6 neon-red">
+                        <h3 class="text-red-400 cyber-font mb-2">Attack Count</h3>
+                        <p id="attack-count" class="text-4xl font-black text-red-300">0</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Tabs -->
+                <div class="flex space-x-4 mb-6">
+                    <button class="tab-btn cyber-button px-6 py-2 rounded-lg cyber-font active" data-tab="alerts">
+                        Alerts
+                    </button>
+                    <button class="tab-btn cyber-button px-6 py-2 rounded-lg cyber-font" data-tab="logs">
+                        Traffic Logs
+                    </button>
+                    <button class="tab-btn cyber-button px-6 py-2 rounded-lg cyber-font" data-tab="analytics">
+                        Analytics
+                    </button>
+                </div>
+                
+                <!-- Alerts Table -->
+                <div id="alerts-tab" class="tab-content">
+                    <div class="mb-4 flex space-x-4">
+                        <input type="text" id="alert-search" placeholder="Search by IP..." class="cyber-input px-4 py-2 rounded-lg flex-1">
+                        <select id="alert-severity-filter" class="cyber-input px-4 py-2 rounded-lg">
+                            <option value="">All Severities</option>
+                            <option value="HIGH">High</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="LOW">Low</option>
+                        </select>
+                        <button id="export-alerts-csv" class="cyber-button px-4 py-2 rounded-lg cyber-font">Export CSV</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-green-400 cyber-font">
+                                    <th class="px-4 py-3 text-left">IP Address</th>
+                                    <th class="px-4 py-3 text-left">Attack Type</th>
+                                    <th class="px-4 py-3 text-left">Severity</th>
+                                    <th class="px-4 py-3 text-left">Threat Score</th>
+                                    <th class="px-4 py-3 text-left">Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alerts-table" class="text-green-300">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Traffic Logs Table -->
+                <div id="logs-tab" class="tab-content hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-green-400 cyber-font">
+                                    <th class="px-4 py-3 text-left">Source IP</th>
+                                    <th class="px-4 py-3 text-left">Destination IP</th>
+                                    <th class="px-4 py-3 text-left">Request Type</th>
+                                    <th class="px-4 py-3 text-left">Status</th>
+                                    <th class="px-4 py-3 text-left">Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-table" class="text-green-300">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Analytics Tab -->
+                <div id="analytics-tab" class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="cyber-card rounded-lg p-6 neon-border">
+                            <h3 class="text-green-400 cyber-font mb-4">Attack Trends</h3>
+                            <canvas id="attackTrendsChart"></canvas>
+                        </div>
+                        <div class="cyber-card rounded-lg p-6 neon-border">
+                            <h3 class="text-green-400 cyber-font mb-4">Top Suspicious IPs</h3>
+                            <canvas id="topIpsChart"></canvas>
+                        </div>
+                        <div class="cyber-card rounded-lg p-6 neon-border">
+                            <h3 class="text-green-400 cyber-font mb-4">Attack Categories</h3>
+                            <canvas id="attackCategoriesChart"></canvas>
+                        </div>
+                        <div class="cyber-card rounded-lg p-6 neon-border">
+                            <h3 class="text-green-400 cyber-font mb-4">Severity Distribution</h3>
+                            <canvas id="severityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
