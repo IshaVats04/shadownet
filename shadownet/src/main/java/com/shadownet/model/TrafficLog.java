@@ -2,8 +2,10 @@ package com.shadownet.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 @Entity
-@Table(name = "traffic_logs")
-
+@Table(name = "traffic_logs", indexes = {
+    @Index(name = "idx_traffic_source_ip", columnList = "source_ip"),
+    @Index(name = "idx_traffic_timestamp", columnList = "timestamp")
+})
 public class TrafficLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

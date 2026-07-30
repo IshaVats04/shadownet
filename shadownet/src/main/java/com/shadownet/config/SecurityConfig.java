@@ -25,23 +25,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf
-                .csrfTokenRepository(org.springframework.security.web.csrf.CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringRequestMatchers("/api/auth/**", "/api/public/**", "/honeypot/**")
-        )
+        http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index.html", "/login", "/dashboard", "/app.js", "/favicon.ico", "/favicon.ico/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/public/**", "/honeypot/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/analyst/**").hasAnyRole("ADMIN", "ANALYST")
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(new com.shadownet.filter.TrafficLoggingFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new com.shadownet.filter.RateLimitFilter(), UsernamePasswordAuthenticationFilter.class);
+                        .anyRequest().permitAll()
+                );
 
         http.headers(headers -> headers
                 .contentSecurityPolicy(csp -> csp

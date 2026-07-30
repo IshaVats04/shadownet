@@ -3,12 +3,14 @@ package com.shadownet.service;
 import com.shadownet.Repository.TrafficLogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@Transactional
 public class DetectionService {
 
     @Autowired
@@ -21,6 +23,7 @@ public class DetectionService {
     private final int DOS_THRESHOLD = 100;
     private final long TIME_WINDOW_MS = 60000; // 1 minute
 
+    @Transactional
     public void checkForDosAttack(String ipAddress) {
         long currentTime = System.currentTimeMillis();
         requestCounts.computeIfAbsent(ipAddress, k -> new ArrayList<>()).add(currentTime);

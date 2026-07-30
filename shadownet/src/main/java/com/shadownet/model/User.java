@@ -1,7 +1,9 @@
 package com.shadownet.model;
 import jakarta.persistence.*;
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {
+    @Index(name = "idx_username", columnList = "username", unique = true)
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

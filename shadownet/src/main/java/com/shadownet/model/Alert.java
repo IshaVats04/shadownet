@@ -2,7 +2,11 @@ package com.shadownet.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 @Entity
-@Table(name = "alerts")
+@Table(name = "alerts", indexes = {
+    @Index(name = "idx_alert_ip", columnList = "ip_address"),
+    @Index(name = "idx_alert_severity", columnList = "severity"),
+    @Index(name = "idx_alert_timestamp", columnList = "timestamp")
+})
 public class Alert {
      @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

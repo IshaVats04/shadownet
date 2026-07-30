@@ -9,8 +9,10 @@ import com.shadownet.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AuthService {
 
     @Autowired
@@ -25,6 +27,7 @@ public class AuthService {
     @Autowired
     private BruteForceDetectionService bruteForceDetectionService;
 
+    @Transactional
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
@@ -41,6 +44,7 @@ public class AuthService {
         return new AuthResponse(token, user.getUsername(), user.getRole());
     }
 
+    @Transactional(readOnly = true)
     public AuthResponse login(LoginRequest request, String ipAddress) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
